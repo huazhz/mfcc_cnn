@@ -13,6 +13,8 @@ def test_load_data():
     data, labels = load_data.load_data(simple_labels_file)
     print(data.shape)
     print(labels.shape)
+    for i in range(len(data)):
+        print(data[i], labels[i])
     # for row in data:
     #     print(row)
     # print(type(labels))
