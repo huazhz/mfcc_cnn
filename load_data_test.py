@@ -32,6 +32,14 @@ def test_load_data():
     #     print(type(label))
 
 
+def test_load_data_1hot():
+    simple_labels_file = 'trim_labels_1.txt'
+    data, labels, classes = load_data.load_data_1hot(simple_labels_file)
+    a = np.sum(labels, axis=0)
+    print(classes)
+    print(a)
+
+
 def test_get_classes_idx():
     classes = {'exc', 'ang', 'fru', 'sad', 'neu', 'hap'}
     d = load_data.get_classes_idx(classes)
@@ -40,6 +48,7 @@ def test_get_classes_idx():
 
 
 if __name__ == '__main__':
+    test_load_data_1hot()
     # test_get_mfcc_path()
-    test_load_data()
+    # test_load_data()
     # test_get_classes_idx()

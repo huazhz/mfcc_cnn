@@ -52,3 +52,10 @@ def get_one_hot_labels(labels, classes):
         idx = labels == c
         new_labels[:, i][idx] = 1
     return new_labels
+
+
+def load_data_1hot(simple_label_file):
+    data, labels_raw = load_data(simple_label_file)
+    classes = sorted(get_classes(labels_raw))
+    labels = get_one_hot_labels(labels_raw, classes)
+    return data, labels, classes
