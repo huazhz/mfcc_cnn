@@ -35,3 +35,20 @@ def load_data(simple_label_file):
     return np.array(data), np.array(labels)
 
 
+# {'exc', 'ang', 'fru', 'sad', 'neu', 'hap'}
+def get_classes(labels):
+    return set(labels)
+
+
+def get_classes_idx(classes):
+    return zip(classes, range(len(classes)))
+
+
+def get_one_hot_labels(labels, classes):
+    classes_num = len(classes)
+    samples_num = len(labels)
+    new_labels = np.zeros((samples_num, classes_num))
+    for i, c in zip(range(classes_num), classes):
+        idx = labels == c
+        new_labels[:, i][idx] = 1
+    return new_labels

@@ -1,4 +1,6 @@
 import load_data
+import numpy as np
+from collections import Counter
 
 
 def test_get_mfcc_path():
@@ -9,12 +11,20 @@ def test_get_mfcc_path():
 
 
 def test_load_data():
-    simple_labels_file = 'test_labels.txt'
+    simple_labels_file = 'trim_labels_1.txt'
     data, labels = load_data.load_data(simple_labels_file)
     print(data.shape)
     print(labels.shape)
-    for i in range(len(data)):
-        print(data[i], labels[i])
+    classes = load_data.get_classes(labels)
+    new_labels = load_data.get_one_hot_labels(labels, classes)
+    a = np.sum(new_labels, axis=0)
+    b = Counter(labels)
+    print(classes)
+    print(a)
+    print(b)
+    # print(classes)
+    # for i in range(len(data)):
+    #     print(data[i], labels[i])
     # for row in data:
     #     print(row)
     # print(type(labels))
@@ -22,6 +32,14 @@ def test_load_data():
     #     print(type(label))
 
 
+def test_get_classes_idx():
+    classes = {'exc', 'ang', 'fru', 'sad', 'neu', 'hap'}
+    d = load_data.get_classes_idx(classes)
+    for i, v in d:
+        print(i, v)
+
+
 if __name__ == '__main__':
     # test_get_mfcc_path()
     test_load_data()
+    # test_get_classes_idx()
