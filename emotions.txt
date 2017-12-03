@@ -1,0 +1,2 @@
+10
+{'neu', 'exc', 'oth', 'sad', 'dis', 'sur', 'fru', 'fea', 'ang', 'hap'}
