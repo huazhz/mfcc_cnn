@@ -43,6 +43,25 @@ def test_mfcc_data2():
         print(mfcc_train.cur)
 
 
-if __name__ == '__main__':
-    test_mfcc_data2()
+def test_divide_data():
+    data_raw = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14]])
+    labels_raw = np.array([3, 7, 11, 15, 19, 23, 27])
+    rate1 = 0.67
+    (train_data, train_label), (test_data, test_label) = mfcc_data.divide_data(data_raw, labels_raw, 3, rate1)
+    print_dl(train_data, train_label)
+    print_dl(test_data, test_label)
 
+
+def test_divide_data2():
+    data_raw, labels_raw, classes = load_data.load_data_1hot('./trim_labels_1.txt')
+    rate1 = 0.67
+    (train_data, train_label), (test_data, test_label) = mfcc_data.divide_data(data_raw, labels_raw, 10, rate1)
+    print(len(data_raw))
+    print(len(train_data))
+    print(len(test_data))
+    print(len(train_data) + len(test_data))
+
+
+if __name__ == '__main__':
+    # test_mfcc_data2()
+    test_divide_data()

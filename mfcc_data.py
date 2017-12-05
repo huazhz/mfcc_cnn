@@ -50,9 +50,11 @@ def divide_data(data, labels, continuous_eles, rate1):
     num = len(data)
     if num != len(labels):
         raise Exception('size not equal for data and labels')
-    idx2 = np.array(range(num)).reshape((-1, continuous_eles))
-    random.shuffle(idx2)
-    idx = idx2.raval()
+    reshape_end = num - num % continuous_eles
+    idx1 = np.array(range(num))
+    idx2 = idx1[:reshape_end].reshape((-1, continuous_eles))
+    np.random.shuffle(idx2)
+    idx = np.hstack((idx2.ravel(), idx1[reshape_end:]))
     split = int(num * rate1)
     data1 = data[idx[:split]]
     labels1 = labels[idx[:split]]
