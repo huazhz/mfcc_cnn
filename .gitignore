@@ -3,4 +3,5 @@ config.py
 .idea/
 __pycache__/
 save_id.txt
+save_pid.txt
 *.log
