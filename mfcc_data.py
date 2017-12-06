@@ -39,6 +39,9 @@ class MFCC_DATA(object):
         self.cur %= self.data_size
         return self.data[batch_idx], self.labels[batch_idx]
 
+    def batch_num(self, batch_size):
+        return int(self.data_size / batch_size)
+
     def shuffle_data(self):
         return self.data[self.idx]
 
