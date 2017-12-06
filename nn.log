@@ -1,0 +1,61 @@
+nohup: ignoring input
+2017-12-06 09:56:27.736120: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX
+2017-12-06 09:56:27.845316: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:892] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2017-12-06 09:56:27.845553: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 0 with properties: 
+name: GeForce GTX 950 major: 5 minor: 2 memoryClockRate(GHz): 1.19
+pciBusID: 0000:01:00.0
+totalMemory: 1.95GiB freeMemory: 1.12GiB
+2017-12-06 09:56:27.845573: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: GeForce GTX 950, pci bus id: 0000:01:00.0, compute capability: 5.2)
+Saving graph to: /tmp/tmpa18ir97_
+step 0, training accuracy 0.2
+step 100, training accuracy 0.228
+step 200, training accuracy 0.208
+step 300, training accuracy 0.23
+step 400, training accuracy 0.23
+step 500, training accuracy 0.204
+step 600, training accuracy 0.172
+step 700, training accuracy 0.212
+step 800, training accuracy 0.214
+step 900, training accuracy 0.194
+step 1000, training accuracy 0.208
+step 1100, training accuracy 0.218
+step 1200, training accuracy 0.19
+step 1300, training accuracy 0.234
+step 1400, training accuracy 0.184
+step 1500, training accuracy 0.196
+step 1600, training accuracy 0.208
+step 1700, training accuracy 0.212
+step 1800, training accuracy 0.176
+step 1900, training accuracy 0.214
+step 2000, training accuracy 0.222
+step 2100, training accuracy 0.236
+step 2200, training accuracy 0.184
+step 2300, training accuracy 0.2
+step 2400, training accuracy 0.17
+step 2500, training accuracy 0.21
+step 2600, training accuracy 0.174
+step 2700, training accuracy 0.208
+step 2800, training accuracy 0.204
+step 2900, training accuracy 0.172
+step 3000, training accuracy 0.184
+step 3100, training accuracy 0.224
+step 3200, training accuracy 0.188
+step 3300, training accuracy 0.204
+step 3400, training accuracy 0.208
+step 3500, training accuracy 0.204
+step 3600, training accuracy 0.204
+step 3700, training accuracy 0.2
+step 3800, training accuracy 0.196
+step 3900, training accuracy 0.208
+step 4000, training accuracy 0.184
+step 4100, training accuracy 0.182
+step 4200, training accuracy 0.186
+step 4300, training accuracy 0.166
+step 4400, training accuracy 0.218
+step 4500, training accuracy 0.196
+step 4600, training accuracy 0.176
+step 4700, training accuracy 0.206
+step 4800, training accuracy 0.17
+step 4900, training accuracy 0.21
+test accuracy 0.200222
+Saving graph to: /tmp/tmpa18ir97_
