@@ -51,7 +51,7 @@ def deepnn(x, n_classes):
     with tf.name_scope('fc2'):
         w_fc2 = weight_variable([config.fc1_fs, n_classes])
         b_fc2 = bias_variable([n_classes])
-        y_conv = tf.nn.relu(tf.matmul(h_fc1_drop, w_fc2) + b_fc2)
+        y_conv = tf.matmul(h_fc1_drop, w_fc2) + b_fc2
 
     return y_conv, keep_prob
 
