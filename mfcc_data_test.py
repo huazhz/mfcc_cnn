@@ -1,6 +1,7 @@
 import mfcc_data
 import load_data
 import time
+import config
 import numpy as np
 
 
@@ -30,16 +31,18 @@ def print_dl(data, labels):
 
 
 def test_mfcc_data2():
+    n = 40
     t1 = time.time()
-    data, labels, classes = load_data.load_data_1hot('./trim_labels_all.txt')
+    data, labels = load_data.load_data2d_1hot2('./trim_labels_all.txt', n, config.classes)
     t2 = time.time()
     print(t2 - t1)
     mfcc_train = mfcc_data.MFCC_DATA(data, labels)
     print(len(data))
-    batch_size = 200000
-    loop = 100
+    batch_size = 20000
+    loop = 10
     for _ in range(loop):
-        mfcc_train.next_batch(batch_size)
+        batch = mfcc_train.next_batch(batch_size)
+        print(batch[0].shape, batch[1].shape)
         print(mfcc_train.cur)
 
 
@@ -63,5 +66,5 @@ def test_divide_data2():
 
 
 if __name__ == '__main__':
-    # test_mfcc_data2()
-    test_divide_data()
+    test_mfcc_data2()
+    # test_divide_data()

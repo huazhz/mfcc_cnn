@@ -5,3 +5,5 @@ __pycache__/
 save_id.txt
 save_pid.txt
 *.log
+*.npy
+*.npz

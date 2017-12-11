@@ -4,7 +4,7 @@ import os
 import HTK
 from collections import Counter
 
-emofolds = ['session2_emoevaluation']
+emofolds = ['session5_emoevaluation', ]
 emof_suffix = '.txt'
 
 
@@ -43,7 +43,7 @@ def list_txtf(folds):
 
 
 # every element in a_fs is absolute file
-# save the result use standard output redirect, python process.py > simple_labels.txt
+# save the result use standard output redirect, python process_rawdata.py > simple_labels.txt
 def get_emo_labels(a_fs):
     for a_f in a_fs:
         process_emof(a_f)
@@ -78,9 +78,9 @@ if __name__ == '__main__':
     # results = list_txtf(emofolds)
     # print(results)
 
-    # run the following with: python process.py > simple_labels.txt
-    # fs_ = list_txtf(emofolds)
-    # get_trim_emo_labels(fs_)
+    # run the following with: python process_rawdata.py > simple_labels.txt
+    fs_ = list_txtf(emofolds)
+    get_trim_emo_labels(fs_)
 
     # simple_label_f = './simple_labels_all.txt'
     # cs = count_labels(simple_label_f)
@@ -91,9 +91,9 @@ if __name__ == '__main__':
     # cs = count_labels(simple_label_f)
     # print(len(cs))
     # print(cs)
-    htk_f = os.path.join(config.data_path, 'mfcc_iemocap/Ses03F_script03_2/Ses03F_script03_2_F001.mfcc')
-    data = open_mfcc_f(htk_f)
-    # print(len(data))
-    for row in data:
-        print(len(row))
-    pass
+    # htk_f = os.path.join(config.data_path, 'mfcc_iemocap/Ses03F_script03_2/Ses03F_script03_2_F001.mfcc')
+    # data = open_mfcc_f(htk_f)
+    # # print(len(data))
+    # for row in data:
+    #     print(len(row))
+    # pass

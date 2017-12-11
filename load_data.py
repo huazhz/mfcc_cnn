@@ -35,6 +35,34 @@ def load_data(simple_label_file):
     return np.array(data), np.array(labels)
 
 
+def load_data_2d(simple_label_file, n):
+    data = list()
+    labels = list()
+    with open(simple_label_file, 'r') as inf:
+        for line in inf:
+            eles = line.split()
+            if len(eles) == 2:
+                mfcc_path = get_mfcc_path(eles[0])
+                samples_1d = load_mfcc(mfcc_path)
+                samples_2d = samples1dto2d(samples_1d, n)
+                sample_labels = [eles[1]] * len(samples_2d)
+                data += samples_2d
+                labels += sample_labels
+    return np.array(data), np.array(labels)
+
+
+def samples1dto2d(samples1d, n):
+    results = list()
+    len_1d = len(samples1d)
+    i = 0
+    while i + n < len_1d:
+        results.append(samples1d[i:i+n])
+        i += n
+    if i < len_1d - 1:
+        results.append(samples1d[-n:])
+    return results
+
+
 # {'exc', 'ang', 'fru', 'sad', 'neu', 'hap'}
 def get_classes(labels):
     return set(labels)
@@ -59,3 +87,16 @@ def load_data_1hot(simple_label_file):
     classes = sorted(get_classes(labels_raw))
     labels = get_one_hot_labels(labels_raw, classes)
     return data, labels, classes
+
+
+def load_data2d_1hot(sample_labels_file, n):
+    data, labels_raw = load_data_2d(sample_labels_file, n)
+    classes = sorted(get_classes(labels_raw))
+    labels = get_one_hot_labels(labels_raw, classes)
+    return data, labels, classes
+
+
+def load_data2d_1hot2(sample_labels_file, n, classes):
+    data, labels_raw = load_data_2d(sample_labels_file, n)
+    labels = get_one_hot_labels(labels_raw, classes)
+    return data, labels
