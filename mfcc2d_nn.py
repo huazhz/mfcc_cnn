@@ -76,7 +76,7 @@ def bias_variable(shape):
 
 def main(_):
     batch_size = config.batch_size
-    step_num = config.step_num
+    # step_num = config.step_num
     print_interval = config.print_interval
     train_data = np.load(config.train_d_npy)
     train_labels = np.load(config.train_l_npy)
@@ -94,7 +94,10 @@ def main(_):
     cross_entroy = tf.reduce_mean(cross_entroy)
 
     with tf.name_scope('adam_optimizer'):
-        train_step = tf.train.AdadeltaOptimizer(config.learning_rate).minimize(cross_entroy)
+        train_step0 = tf.train.AdadeltaOptimizer(config.learning_rate0).minimize(cross_entroy)
+        train_step1 = tf.train.AdadeltaOptimizer(config.learning_rate1).minimize(cross_entroy)
+        train_step2 = tf.train.AdadeltaOptimizer(config.learning_rate2).minimize(cross_entroy)
+        train_step3 = tf.train.AdadeltaOptimizer(config.learning_rate3).minimize(cross_entroy)
 
     with tf.name_scope('accuracy'):
         correct_prediction = tf.equal(tf.argmax(y_conv, 1), tf.argmax(y_, 1))
@@ -113,14 +116,47 @@ def main(_):
     with tf.Session() as sess:
         init = tf.global_variables_initializer()
         sess.run(init)
-        for i in range(step_num):
+        for i in range(config.step_num0):
             batch_data, batch_ls = mfcc_train.next_batch(batch_size)
             if i % print_interval == 0:
                 train_accuracy = accuracy.eval(feed_dict={
                     x: batch_data, y_: batch_ls, keep_prob: 1.0
                 })
                 print('step %d, training accuracy %g' % (i, train_accuracy))
-            train_step.run(feed_dict={
+            train_step0.run(feed_dict={
+                x: batch_data, y_: batch_ls, keep_prob: 0.5
+            })
+
+        for i in range(config.step_num1):
+            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
+            if i % print_interval == 0:
+                train_accuracy = accuracy.eval(feed_dict={
+                    x: batch_data, y_: batch_ls, keep_prob: 1.0
+                })
+                print('step %d, training accuracy %g' % (i, train_accuracy))
+            train_step1.run(feed_dict={
+                x: batch_data, y_: batch_ls, keep_prob: 0.5
+            })
+
+        for i in range(config.step_num2):
+            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
+            if i % print_interval == 0:
+                train_accuracy = accuracy.eval(feed_dict={
+                    x: batch_data, y_: batch_ls, keep_prob: 1.0
+                })
+                print('step %d, training accuracy %g' % (i, train_accuracy))
+            train_step2.run(feed_dict={
+                x: batch_data, y_: batch_ls, keep_prob: 0.5
+            })
+
+        for i in range(config.step_num3):
+            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
+            if i % print_interval == 0:
+                train_accuracy = accuracy.eval(feed_dict={
+                    x: batch_data, y_: batch_ls, keep_prob: 1.0
+                })
+                print('step %d, training accuracy %g' % (i, train_accuracy))
+            train_step3.run(feed_dict={
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
             })
 
