@@ -1,12 +1,12 @@
 data_path = '/home/dai/Projects/emotions/data'
 
-step_num0 = 10
+step_num0 = 10000
 
-step_num1 = 10
+step_num1 = 100000
 
-step_num2 = 10
+step_num2 = 200000
 
-step_num3 = 20
+step_num3 = 400000
 
 learning_rate0 = 0.05
 
@@ -20,13 +20,11 @@ label_file = './trim_labels_1.txt'
 
 batch_size = 500
 
-print_interval = 100
+print_interval = 500
 
 continue_eles = 50
 
 train_rate = 0.7
-
-
 
 classes_pickle = './pickles/classes.pickle'
 
