@@ -1,4 +1,4 @@
-data_path = '/home/dai/Projects/emotions/data'
+data_path = '/home/ddy/projects/emotions/mfcc_data'
 
 step_num0 = 10000
 
