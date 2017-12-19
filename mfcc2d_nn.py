@@ -200,7 +200,7 @@ def main(_):
         # post_process.dump_list(classes, config.classes_pickle)
         post_process.dump_list(ground_truth, config.gt_pickle)
         post_process.dump_list(predict_results, config.pr_pickle)
-        print('test set every epoch batch number', mfcc_train.batch_num(batch_size))
+        print('training set, each epoch batch number', mfcc_train.batch_num(batch_size))
 
 
 if __name__ == '__main__':
