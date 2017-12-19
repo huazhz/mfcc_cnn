@@ -3,13 +3,13 @@ batch_size = 500
 
 print_interval = 10
 
-step_num0 = 1
+step_num0 = 10000
 
-step_num1 = 3
+step_num1 = 30000
 
-step_num2 = 3
+step_num2 = 30000
 
-step_num3 = 3
+step_num3 = 30000
 
 learning_rate0 = 0.05
 
