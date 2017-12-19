@@ -126,7 +126,7 @@ def main(_):
                         x: batch_d1, y_: batch_ls1, keep_prob: 1.0
                     })
                     train_acc_queue.add(train_accuracy)
-                print('step %d, training accuracy %g' % (i, train_acc_queue.mean()))
+                print('rate0 step %d, training accuracy %g' % (i, train_acc_queue.mean()))
             batch_data, batch_ls = mfcc_train.next_batch(batch_size)
             train_step0.run(feed_dict={
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
@@ -140,7 +140,7 @@ def main(_):
                         x: batch_d1, y_: batch_ls1, keep_prob: 1.0
                     })
                     train_acc_queue.add(train_accuracy)
-                print('step %d, training accuracy %g' % (i, train_acc_queue.mean()))
+                print('rate1 step %d, training accuracy %g' % (i, train_acc_queue.mean()))
             batch_data, batch_ls = mfcc_train.next_batch(batch_size)
             train_step1.run(feed_dict={
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
@@ -154,7 +154,7 @@ def main(_):
                         x: batch_d1, y_: batch_ls1, keep_prob: 1.0
                     })
                     train_acc_queue.add(train_accuracy)
-                print('step %d, training accuracy %g' % (i, train_acc_queue.mean()))
+                print('rate2 step %d, training accuracy %g' % (i, train_acc_queue.mean()))
             batch_data, batch_ls = mfcc_train.next_batch(batch_size)
             train_step2.run(feed_dict={
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
@@ -168,7 +168,7 @@ def main(_):
                         x: batch_d1, y_: batch_ls1, keep_prob: 1.0
                     })
                     train_acc_queue.add(train_accuracy)
-                print('step %d, training accuracy %g' % (i, train_acc_queue.mean()))
+                print('rate3 step %d, training accuracy %g' % (i, train_acc_queue.mean()))
             batch_data, batch_ls = mfcc_train.next_batch(batch_size)
             train_step3.run(feed_dict={
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
