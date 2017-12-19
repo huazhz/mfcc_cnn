@@ -1,7 +1,7 @@
 
 batch_size = 500
 
-print_interval = 1
+print_interval = 10
 
 step_num0 = 5
 
