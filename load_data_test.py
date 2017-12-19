@@ -4,6 +4,63 @@ import config
 import time
 from collections import Counter
 
+train_data_origin_f = 'train_data_origin.npy'
+test_data_origin_f = 'test_data_origin.npy'
+train_labels_f = 'train_labels.npy'
+test_labels_f = 'test_labels.npy'
+
+train_data_pre = 'train_data_'
+train_l_pre = 'train_l_'
+test_data_pre = 'test_data_'
+test_l_pre = 'test_l_'
+
+
+def test():
+    pass
+
+
+def test_norm_and_div():
+    target_emos = ['neu']
+    classes = ['neu', 'ang', 'hap', 'sad']
+    n = 200
+    shift = 40
+    train_origin = np.load(train_data_origin_f)
+    test_origin = np.load(test_data_origin_f)
+    train_labels = np.load(train_labels_f)
+    test_labels = np.load(test_labels_f)
+    train_norm, test_norm = load_data.norm_train_test_set(train_origin, train_labels, test_origin, target_emos)
+    train_data, train_ls = load_data.div_senses(train_norm, train_labels, n, shift)
+    test_data, test_ls = load_data.div_senses(test_norm, test_labels, n, shift)
+    train_ls_1hot = load_data.get_one_hot_labels(train_ls, classes)
+    test_ls_1hot = load_data.get_one_hot_labels(test_ls, classes)
+    print(train_data.shape, train_ls_1hot.shape)
+    print(test_data.shape, test_ls_1hot.shape)
+    train_data_filename = train_data_pre + 'n' + str(n) + '_s' + str(shift)
+    train_l_filename = train_l_pre + 'n' + str(n) + '_s' + str(shift) + '_1hot'
+    test_data_filename = test_data_pre + 'n' + str(n) + '_s' + str(shift)
+    test_l_filename = test_l_pre + 'n' + str(n) + '_s' + str(shift) + '_1hot'
+    np.save(train_data_filename, train_data)
+    np.save(train_l_filename, train_ls_1hot)
+    np.save(test_data_filename, test_data)
+    np.save(test_l_filename, test_ls_1hot)
+
+
+
+
+def test_load_data2():
+    train_l_f = './fil_l1234.txt'
+    test_l_f = './fil_l5.txt'
+    train_data, train_ls = load_data.load_data2(train_l_f)
+    test_data, test_ls = load_data.load_data2(test_l_f)
+    np.save('train_data_origin', train_data)
+    np.save('test_data_origin', test_data)
+    np.save('train_labels', train_ls)
+    np.save('test_labels', test_ls)
+    print(train_data.shape, train_ls.shape)
+    print(test_data.shape, test_ls.shape)
+    i = 5
+    print(train_ls[5], test_ls[5])
+
 
 def test_get_mfcc_path():
     mfcc_key = 'Ses01M_impro06_F002'
@@ -101,7 +158,9 @@ def dump():
 
 
 if __name__ == '__main__':
-    dump()
+    test_norm_and_div()
+    # test_load_data2()
+    # dump()
     # test_load_data2d_1hot()
     # test_load_data_1hot()
     # test_get_mfcc_path()

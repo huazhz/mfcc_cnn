@@ -37,7 +37,7 @@ def deepnn(x, n_classes):
         h_pool2 = max_pool_2x2(h_conv2)
 
     with tf.name_scope('fc1'):
-        d3_l = int(((config.mfcc_n + 0.5)/2 + 0.5)/2)
+        d3_l = int(((config.mfcc_n + 1)/2 + 1)/2)
         flat_l = d3_l * 10 * config.cnn_kernel2_shape[-1]
         w_fc1 = weight_variable([flat_l, config.fc1_fs])
         b_fc1 = bias_variable([config.fc1_fs])
@@ -81,11 +81,13 @@ def main(_):
     train_data = np.load(config.train_d_npy)
     train_labels = np.load(config.train_l_npy)
     mfcc_train = mfcc_data.MFCC_DATA(train_data, train_labels)
+    train_acc_queue = mfcc_data.AccQueue(len(train_data))
     test_data = np.load(config.test_d_npy)
     test_labels = np.load(config.test_l_npy)
+    test_acc_queue = mfcc_data.AccQueue(len(test_data))
     mfcc_test = mfcc_data.MFCC_DATA(test_data, test_labels)
     n_classes = len(config.classes)
-    x = tf.placeholder(tf.float32, [None, 40, 39])
+    x = tf.placeholder(tf.float32, [None, config.mfcc_n, 39])
     y_ = tf.placeholder(tf.float32, [None, n_classes])
     y_conv, keep_prob = deepnn(x, n_classes)
 
@@ -117,45 +119,57 @@ def main(_):
         init = tf.global_variables_initializer()
         sess.run(init)
         for i in range(config.step_num0):
-            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
             if i % print_interval == 0:
-                train_accuracy = accuracy.eval(feed_dict={
-                    x: batch_data, y_: batch_ls, keep_prob: 1.0
-                })
-                print('step %d, training accuracy %g' % (i, train_accuracy))
+                for j in range(mfcc_train.batch_num(batch_size)):
+                    batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
+                    train_accuracy = accuracy.eval(feed_dict={
+                        x: batch_d1, y_: batch_ls1, keep_prob: 1.0
+                    })
+                    train_acc_queue.add(train_accuracy)
+                print('step %d, training accuracy %g' % (i, train_acc_queue.mean()))
+            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
             train_step0.run(feed_dict={
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
             })
 
         for i in range(config.step_num1):
-            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
             if i % print_interval == 0:
-                train_accuracy = accuracy.eval(feed_dict={
-                    x: batch_data, y_: batch_ls, keep_prob: 1.0
-                })
-                print('step %d, training accuracy %g' % (i, train_accuracy))
+                for j in range(mfcc_train.batch_num(batch_size)):
+                    batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
+                    train_accuracy = accuracy.eval(feed_dict={
+                        x: batch_d1, y_: batch_ls1, keep_prob: 1.0
+                    })
+                    train_acc_queue.add(train_accuracy)
+                print('step %d, training accuracy %g' % (i, train_acc_queue.mean()))
+            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
             train_step1.run(feed_dict={
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
             })
 
         for i in range(config.step_num2):
-            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
             if i % print_interval == 0:
-                train_accuracy = accuracy.eval(feed_dict={
-                    x: batch_data, y_: batch_ls, keep_prob: 1.0
-                })
-                print('step %d, training accuracy %g' % (i, train_accuracy))
+                for j in range(mfcc_train.batch_num(batch_size)):
+                    batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
+                    train_accuracy = accuracy.eval(feed_dict={
+                        x: batch_d1, y_: batch_ls1, keep_prob: 1.0
+                    })
+                    train_acc_queue.add(train_accuracy)
+                print('step %d, training accuracy %g' % (i, train_acc_queue.mean()))
+            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
             train_step2.run(feed_dict={
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
             })
 
         for i in range(config.step_num3):
-            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
             if i % print_interval == 0:
-                train_accuracy = accuracy.eval(feed_dict={
-                    x: batch_data, y_: batch_ls, keep_prob: 1.0
-                })
-                print('step %d, training accuracy %g' % (i, train_accuracy))
+                for j in range(mfcc_train.batch_num(batch_size)):
+                    batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
+                    train_accuracy = accuracy.eval(feed_dict={
+                        x: batch_d1, y_: batch_ls1, keep_prob: 1.0
+                    })
+                    train_acc_queue.add(train_accuracy)
+                print('step %d, training accuracy %g' % (i, train_acc_queue.mean()))
+            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
             train_step3.run(feed_dict={
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
             })

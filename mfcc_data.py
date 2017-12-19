@@ -49,6 +49,28 @@ class MFCC_DATA(object):
         return self.labels[self.idx]
 
 
+class AccQueue:
+    def __init__(self, num):
+        self.size = num
+        self.empties = num
+        self.values = np.zeros((num,))
+        self.i = 0
+
+    def add(self, acc):
+        self.values[self.i] = acc
+        self.i = (self.i + 1) % self.size
+        self.empties -= 1
+
+    def is_empty(self):
+        if self.empties > 0:
+            return True
+        else:
+            return False
+
+    def mean(self):
+        return np.average(self.values)
+
+
 def divide_data(data, labels, continuous_eles, rate1):
     num = len(data)
     if num != len(labels):

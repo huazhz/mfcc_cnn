@@ -4,8 +4,28 @@ import os
 import HTK
 from collections import Counter
 
-emofolds = ['session5_emoevaluation', ]
+emofolds = ['session1_emoevaluation', 'session2_emoevaluation', 'session3_emoevaluation', 'session4_emoevaluation', ]
 emof_suffix = '.txt'
+
+emos = ['neu', 'ang', 'hap', 'sad']
+
+
+def process_emof_with_filter(emo_file, emo_list):
+    with open(emo_file, 'r') as emo_f:
+        for line in emo_f:
+            if '[' in line and ']' in line and 'Ses' in line:
+                for emo in emo_list:
+                    # print(line)
+                    if emo in line:
+                        eles = line.split()
+                        # print(len(eles))
+                        print(eles[3], eles[4])
+                        break
+
+
+def get_filter_labels(a_fs, emos):
+    for a_f in a_fs:
+        process_emof_with_filter(a_f, emos)
 
 
 def process_emof(emo_filename):
@@ -71,8 +91,6 @@ def open_mfcc_f(mfcc_f):
     return htk.data
 
 
-
-
 if __name__ == '__main__':
     # emo_filename_ = os.path.join(config.data_path, 'session1_emoevaluation/Ses01F_impro01.txt')
     # print(emo_filename_)
@@ -82,7 +100,8 @@ if __name__ == '__main__':
 
     # run the following with: python process_rawdata.py > simple_labels.txt
     fs_ = list_txtf(emofolds)
-    get_trim_emo_labels(fs_)
+    get_filter_labels(fs_, emos)
+    # get_trim_emo_labels(fs_)
 
     # simple_label_f = './simple_labels_all.txt'
     # cs = count_labels(simple_label_f)
