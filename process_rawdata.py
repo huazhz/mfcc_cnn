@@ -71,6 +71,8 @@ def open_mfcc_f(mfcc_f):
     return htk.data
 
 
+
+
 if __name__ == '__main__':
     # emo_filename_ = os.path.join(config.data_path, 'session1_emoevaluation/Ses01F_impro01.txt')
     # print(emo_filename_)
