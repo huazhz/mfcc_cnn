@@ -19,7 +19,7 @@ learning_rate2 = 1e-3
 
 learning_rate3 = 1e-4
 
-visible_device = '2'
+visible_device = '3'
 
 # data_path = '/home/dai/Projects/emotions/data'
 #
