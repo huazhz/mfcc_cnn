@@ -3,13 +3,13 @@ batch_size = 500
 
 print_interval = 10
 
-step_num0 = 5
+step_num0 = 1
 
-step_num1 = 10
+step_num1 = 3
 
-step_num2 = 10
+step_num2 = 3
 
-step_num3 = 10
+step_num3 = 3
 
 learning_rate0 = 0.05
 
@@ -39,9 +39,9 @@ checkpoint_file = './my-model/my-model'
 #
 # classes_pickle = './pickles/classes.pickle'
 
-gt_pickle = './pickles/gt_1.pickle'
+gt_pickle = './pickles/gt_n200.pickle'
 
-pr_pickle = './pickles/pr_1.pickle'
+pr_pickle = './pickles/pr_n200.pickle'
 
 # device = '/gpu:0'
 
