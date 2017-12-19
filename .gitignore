@@ -7,3 +7,4 @@ save_pid.txt
 *.log
 *.npy
 *.npz
+my-model/*
