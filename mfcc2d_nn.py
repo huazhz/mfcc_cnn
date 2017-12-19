@@ -80,11 +80,11 @@ def main(_):
     train_data = np.load(config.train_d_npy)
     train_labels = np.load(config.train_l_npy)
     mfcc_train = mfcc_data.MFCC_DATA(train_data, train_labels)
-    train_acc_queue = mfcc_data.AccQueue(len(train_data))
+    train_acc_queue = mfcc_data.AccQueue(mfcc_train.batch_num(batch_size))
     test_data = np.load(config.test_d_npy)
     test_labels = np.load(config.test_l_npy)
-    test_acc_queue = mfcc_data.AccQueue(len(test_data))
     mfcc_test = mfcc_data.MFCC_DATA(test_data, test_labels)
+    test_acc_queue = mfcc_data.AccQueue(mfcc_test.batch_num(batch_size))
     n_classes = len(config.classes)
     x = tf.placeholder(tf.float32, [None, config.mfcc_n, 39])
     y_ = tf.placeholder(tf.float32, [None, n_classes])
@@ -133,7 +133,7 @@ def main(_):
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
             })
 
-        for i in range(config.num0, config.num0 + config.step_num1):
+        for i in range(config.step_num0, config.step_num0 + config.step_num1):
             if i % print_interval == 0:
                 for j in range(mfcc_train.batch_num(batch_size)):
                     batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
@@ -147,7 +147,7 @@ def main(_):
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
             })
 
-        for i in range(config.num0 + config.step_num1, config.num0 + config.step_num1 + config.step_num2):
+        for i in range(config.step_num0 + config.step_num1, config.step_num0 + config.step_num1 + config.step_num2):
             if i % print_interval == 0:
                 for j in range(mfcc_train.batch_num(batch_size)):
                     batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
@@ -161,8 +161,8 @@ def main(_):
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
             })
 
-        for i in range(config.num0 + config.step_num1 + config.step_num2,
-                       config.num0 + config.step_num1 + config.step_num2 + config.step_num3):
+        for i in range(config.step_num0 + config.step_num1 + config.step_num2,
+                       config.step_num0 + config.step_num1 + config.step_num2 + config.step_num3):
             if i % print_interval == 0:
                 for j in range(mfcc_train.batch_num(batch_size)):
                     batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
