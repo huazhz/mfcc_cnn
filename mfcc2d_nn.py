@@ -12,7 +12,6 @@ os.environ["CUDA_VISIBLE_DEVICES"] = config.visible_device
 
 
 def deepnn(x, n_classes):
-
     with tf.name_scope('reshape'):
         x_mfcc = tf.reshape(x, [-1, config.mfcc_n, 39, 1])
 
@@ -37,7 +36,7 @@ def deepnn(x, n_classes):
         h_pool2 = max_pool_2x2(h_conv2)
 
     with tf.name_scope('fc1'):
-        d3_l = int(((config.mfcc_n + 1)/2 + 1)/2)
+        d3_l = int(((config.mfcc_n + 1) / 2 + 1) / 2)
         flat_l = d3_l * 10 * config.cnn_kernel2_shape[-1]
         w_fc1 = weight_variable([flat_l, config.fc1_fs])
         b_fc1 = bias_variable([config.fc1_fs])
@@ -114,11 +113,13 @@ def main(_):
     print('Saving graph to: %s' % graph_location)
     train_writer = tf.summary.FileWriter(graph_location)
     train_writer.add_graph(tf.get_default_graph())
-
+    saver = tf.train.Saver()
     with tf.Session() as sess:
         init = tf.global_variables_initializer()
         sess.run(init)
         for i in range(config.step_num0):
+            if i % config.save_checkpoint_interval == 0:
+                saver.save(sess, config.checkpoint_file, global_step=i)
             if i % print_interval == 0:
                 for j in range(mfcc_train.batch_num(batch_size)):
                     batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
@@ -132,7 +133,7 @@ def main(_):
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
             })
 
-        for i in range(config.step_num1):
+        for i in range(config.num0, config.num0 + config.step_num1):
             if i % print_interval == 0:
                 for j in range(mfcc_train.batch_num(batch_size)):
                     batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
@@ -146,7 +147,7 @@ def main(_):
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
             })
 
-        for i in range(config.step_num2):
+        for i in range(config.num0 + config.step_num1, config.num0 + config.step_num1 + config.step_num2):
             if i % print_interval == 0:
                 for j in range(mfcc_train.batch_num(batch_size)):
                     batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
@@ -160,7 +161,8 @@ def main(_):
                 x: batch_data, y_: batch_ls, keep_prob: 0.5
             })
 
-        for i in range(config.step_num3):
+        for i in range(config.num0 + config.step_num1 + config.step_num2,
+                       config.num0 + config.step_num1 + config.step_num2 + config.step_num3):
             if i % print_interval == 0:
                 for j in range(mfcc_train.batch_num(batch_size)):
                     batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
@@ -202,5 +204,3 @@ def main(_):
 
 if __name__ == '__main__':
     tf.app.run(main=main, argv=[sys.argv[0]])
-
-

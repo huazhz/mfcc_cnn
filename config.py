@@ -21,6 +21,10 @@ learning_rate3 = 1e-4
 
 visible_device = '3'
 
+save_checkpoint_interval = 1000
+
+checkpoint_file = './my-model/my-model'
+
 # data_path = '/home/dai/Projects/emotions/data'
 #
 #
