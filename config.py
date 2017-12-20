@@ -1,15 +1,15 @@
 
 batch_size = 500
 
-print_interval = 10
+print_interval = 1000
 
-step_num0 = 10000
+step_num0 = 50000
 
-step_num1 = 30000
+step_num1 = 50000
 
-step_num2 = 30000
+step_num2 = 0
 
-step_num3 = 30000
+step_num3 = 0
 
 learning_rate0 = 0.05
 
