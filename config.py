@@ -3,19 +3,19 @@ batch_size = 500
 
 print_interval = 1000
 
-step_num0 = 50000
+step_num0 = 30000
 
-step_num1 = 50000
+step_num1 = 30000
 
-step_num2 = 0
+step_num2 = 30000
 
 step_num3 = 0
 
 learning_rate0 = 0.05
 
-learning_rate1 = 1e-2
+learning_rate1 = 0.03
 
-learning_rate2 = 1e-3
+learning_rate2 = 0.01
 
 learning_rate3 = 1e-4
 
