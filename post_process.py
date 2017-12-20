@@ -31,16 +31,39 @@ def process_results(gt, pr, classes):
 def print_csv():
     gt = load_pickle(config.gt_pickle)
     pr = load_pickle(config.pr_pickle)
+    total_acc = np.sum(np.array(gt) == np.array(pr)) / len(gt)
     matrix, classes = process_results(gt, pr, config.classes)
-    print('\\', end='\t')
+    print()
+    print('  a\\p', end='\t')
     for c in classes:
         print(c, end='\t')
     print()
     for i in range(len(classes)):
-        print(classes[i], end='\t')
+        print(' ',classes[i], end='\t')
         for ele in matrix[i]:
             print(ele, end='\t')
         print()
+    print()
+
+    sum = np.sum(matrix, axis=1)
+    matrix2 = matrix / sum
+
+    print('  a\\p', end='\t')
+    for c in classes:
+        print(' ', c, end='\t')
+    print()
+    for i in range(len(classes)):
+        print(' ', classes[i], end='\t')
+        for ele in matrix2[i]:
+            print('%.4f' % ele, end='\t')
+        print()
+    print()
+
+    avg = 0
+    for i in range(len(classes)):
+        avg += matrix2[i, i]
+    print('  average accurate is %.4f' % (avg/len(classes)))
+    print('  total accurate is %.4f' % total_acc)
     print()
 
 
