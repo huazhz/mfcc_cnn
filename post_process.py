@@ -29,8 +29,8 @@ def process_results(gt, pr, classes):
 
 
 def print_csv():
-    gt = load_pickle('./pickles/gt.pickle')
-    pr = load_pickle('./pickles/pr.pickle')
+    gt = load_pickle(config.gt_pickle)
+    pr = load_pickle(config.pr_pickle)
     matrix, classes = process_results(gt, pr, config.classes)
     print('\\', end='\t')
     for c in classes:
