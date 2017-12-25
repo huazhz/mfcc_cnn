@@ -3,13 +3,9 @@ batch_size = 500
 
 print_interval = 1000
 
-<<<<<<< HEAD
-step_num0 = 100000
-=======
 save_checkpoint_interval = 10000
 
-step_num0 = 30000
->>>>>>> fba8f48d5e8e2d52837bd55806ce1fa1ab141bec
+step_num0 = 100000
 
 step_num1 = 100000
 
