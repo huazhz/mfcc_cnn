@@ -1,15 +1,15 @@
 
 batch_size = 500
 
-print_interval = 10
+print_interval = 1000
 
-save_checkpoint_interval = 1000
+save_checkpoint_interval = 10000
 
-step_num0 = 3
+step_num0 = 30000
 
-step_num1 = 3
+step_num1 = 30000
 
-step_num2 = 3
+step_num2 = 30000
 
 step_num3 = 0
 
@@ -23,9 +23,7 @@ learning_rate3 = 1e-4
 
 visible_device = '3'
 
-
-
-checkpoint_file = './my-model/my-model'
+checkpoint_file = './my-model2/my-model'
 
 # data_path = '/home/dai/Projects/emotions/data'
 #
