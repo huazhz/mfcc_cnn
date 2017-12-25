@@ -67,3 +67,5 @@ train_l_npy = './train_l_n200_s40_1hot.npy'
 test_d_npy = './test_data_n200_s40.npy'
 
 test_l_npy = './test_l_n200_s40_1hot.npy'
+
+is_retrain = False

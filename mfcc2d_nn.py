@@ -115,66 +115,69 @@ def main(_):
     train_writer.add_graph(tf.get_default_graph())
     saver = tf.train.Saver()
     with tf.Session() as sess:
-        init = tf.global_variables_initializer()
-        sess.run(init)
-        for i in range(config.step_num0):
-            if i % config.save_checkpoint_interval == 0:
-                saver.save(sess, config.checkpoint_file, global_step=i)
-            if i % print_interval == 0:
-                for j in range(mfcc_train.batch_num(batch_size)):
-                    batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
-                    train_accuracy = accuracy.eval(feed_dict={
-                        x: batch_d1, y_: batch_ls1, keep_prob: 1.0
-                    })
-                    train_acc_queue.add(train_accuracy)
-                print('rate0 step %d, training accuracy %g' % (i, train_acc_queue.mean()))
-            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
-            train_step0.run(feed_dict={
-                x: batch_data, y_: batch_ls, keep_prob: 0.5
-            })
+        if config.is_retrain:
+            init = tf.global_variables_initializer()
+            sess.run(init)
+            for i in range(config.step_num0):
+                if i % config.save_checkpoint_interval == 0:
+                    saver.save(sess, config.checkpoint_file, global_step=i)
+                if i % print_interval == 0:
+                    for j in range(mfcc_train.batch_num(batch_size)):
+                        batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
+                        train_accuracy = accuracy.eval(feed_dict={
+                            x: batch_d1, y_: batch_ls1, keep_prob: 1.0
+                        })
+                        train_acc_queue.add(train_accuracy)
+                    print('rate0 step %d, training accuracy %g' % (i, train_acc_queue.mean()))
+                batch_data, batch_ls = mfcc_train.next_batch(batch_size)
+                train_step0.run(feed_dict={
+                    x: batch_data, y_: batch_ls, keep_prob: 0.5
+                })
 
-        for i in range(config.step_num0, config.step_num0 + config.step_num1):
-            if i % print_interval == 0:
-                for j in range(mfcc_train.batch_num(batch_size)):
-                    batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
-                    train_accuracy = accuracy.eval(feed_dict={
-                        x: batch_d1, y_: batch_ls1, keep_prob: 1.0
-                    })
-                    train_acc_queue.add(train_accuracy)
-                print('rate1 step %d, training accuracy %g' % (i, train_acc_queue.mean()))
-            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
-            train_step1.run(feed_dict={
-                x: batch_data, y_: batch_ls, keep_prob: 0.5
-            })
+            for i in range(config.step_num0, config.step_num0 + config.step_num1):
+                if i % print_interval == 0:
+                    for j in range(mfcc_train.batch_num(batch_size)):
+                        batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
+                        train_accuracy = accuracy.eval(feed_dict={
+                            x: batch_d1, y_: batch_ls1, keep_prob: 1.0
+                        })
+                        train_acc_queue.add(train_accuracy)
+                    print('rate1 step %d, training accuracy %g' % (i, train_acc_queue.mean()))
+                batch_data, batch_ls = mfcc_train.next_batch(batch_size)
+                train_step1.run(feed_dict={
+                    x: batch_data, y_: batch_ls, keep_prob: 0.5
+                })
 
-        for i in range(config.step_num0 + config.step_num1, config.step_num0 + config.step_num1 + config.step_num2):
-            if i % print_interval == 0:
-                for j in range(mfcc_train.batch_num(batch_size)):
-                    batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
-                    train_accuracy = accuracy.eval(feed_dict={
-                        x: batch_d1, y_: batch_ls1, keep_prob: 1.0
-                    })
-                    train_acc_queue.add(train_accuracy)
-                print('rate2 step %d, training accuracy %g' % (i, train_acc_queue.mean()))
-            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
-            train_step2.run(feed_dict={
-                x: batch_data, y_: batch_ls, keep_prob: 0.5
-            })
+            for i in range(config.step_num0 + config.step_num1, config.step_num0 + config.step_num1 + config.step_num2):
+                if i % print_interval == 0:
+                    for j in range(mfcc_train.batch_num(batch_size)):
+                        batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
+                        train_accuracy = accuracy.eval(feed_dict={
+                            x: batch_d1, y_: batch_ls1, keep_prob: 1.0
+                        })
+                        train_acc_queue.add(train_accuracy)
+                    print('rate2 step %d, training accuracy %g' % (i, train_acc_queue.mean()))
+                batch_data, batch_ls = mfcc_train.next_batch(batch_size)
+                train_step2.run(feed_dict={
+                    x: batch_data, y_: batch_ls, keep_prob: 0.5
+                })
 
-        for i in range(config.step_num0 + config.step_num1 + config.step_num2,
-                       config.step_num0 + config.step_num1 + config.step_num2 + config.step_num3):
-            if i % print_interval == 0:
-                for j in range(mfcc_train.batch_num(batch_size)):
-                    batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
-                    train_accuracy = accuracy.eval(feed_dict={
-                        x: batch_d1, y_: batch_ls1, keep_prob: 1.0
-                    })
-                    train_acc_queue.add(train_accuracy)
-                print('rate3 step %d, training accuracy %g' % (i, train_acc_queue.mean()))
-            batch_data, batch_ls = mfcc_train.next_batch(batch_size)
-            train_step3.run(feed_dict={
-                x: batch_data, y_: batch_ls, keep_prob: 0.5
-            })
+            for i in range(config.step_num0 + config.step_num1 + config.step_num2,
+                           config.step_num0 + config.step_num1 + config.step_num2 + config.step_num3):
+                if i % print_interval == 0:
+                    for j in range(mfcc_train.batch_num(batch_size)):
+                        batch_d1, batch_ls1 = mfcc_train.next_batch(batch_size)
+                        train_accuracy = accuracy.eval(feed_dict={
+                            x: batch_d1, y_: batch_ls1, keep_prob: 1.0
+                        })
+                        train_acc_queue.add(train_accuracy)
+                    print('rate3 step %d, training accuracy %g' % (i, train_acc_queue.mean()))
+                batch_data, batch_ls = mfcc_train.next_batch(batch_size)
+                train_step3.run(feed_dict={
+                    x: batch_data, y_: batch_ls, keep_prob: 0.5
+                })
+        else:
+            saver.restore(sess, config.checkpoint_file)
 
         test_accuracy = 0
         ground_truth = list()
