@@ -4,7 +4,7 @@ import os
 import HTK
 from collections import Counter
 
-emofolds = ['session1_emoevaluation', 'session2_emoevaluation', 'session3_emoevaluation', 'session4_emoevaluation', ]
+emofolds = ['session4_emoevaluation', ]
 emof_suffix = '.txt'
 
 emos = ['neu', 'ang', 'hap', 'sad']

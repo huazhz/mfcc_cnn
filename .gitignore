@@ -9,3 +9,4 @@ save_pid.txt
 *.npz
 my-model/*
 npy/*
+npy2/*

@@ -1,13 +1,15 @@
 
 batch_size = 500
 
-print_interval = 1000
+print_interval = 10
 
-step_num0 = 30000
+save_checkpoint_interval = 1000
 
-step_num1 = 30000
+step_num0 = 3
 
-step_num2 = 30000
+step_num1 = 3
+
+step_num2 = 3
 
 step_num3 = 0
 
@@ -21,7 +23,7 @@ learning_rate3 = 1e-4
 
 visible_device = '3'
 
-save_checkpoint_interval = 1000
+
 
 checkpoint_file = './my-model/my-model'
 
@@ -60,12 +62,20 @@ fc1_fs = 512
 # classes = ['ang', 'exc', 'fru', 'hap', 'neu', 'sad']
 classes = ['neu', 'ang', 'hap', 'sad']
 
-train_d_npy = './train_data_n200_s40.npy'
+train_d_npy = './npy2/data_123_n200_s40.npy'
 
-train_l_npy = './train_l_n200_s40_1hot.npy'
+train_l_npy = './npy2/ls_1hot_123_n200_s40.npy'
 
-test_d_npy = './test_data_n200_s40.npy'
+vali_d_npy = './npy2/data_4_n200_s40.npy'
 
-test_l_npy = './test_l_n200_s40_1hot.npy'
+vali_l_npy = './npy2/ls_1hot_4_n200_s40.npy'
 
-is_retrain = False
+test_d_npy = './npy2/data_5_n200_s40.npy'
+
+test_l_npy = './npy2/ls_1hot_5_n200_s40.npy'
+
+is_train = True
+
+is_restore = False
+
+restore_file = ''

@@ -198,3 +198,6 @@ def norm_train_test_set(train_origin_data, train_labels, test_origin_data, targe
     train_norm_data = normalize_origin_set(train_origin_data, mu, sigma)
     test_norm_data = normalize_origin_set(test_origin_data, mu, sigma)
     return train_norm_data, test_norm_data
+
+
+# def get_norm_data(simple_label_txt):
