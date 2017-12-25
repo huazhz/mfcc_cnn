@@ -3,11 +3,11 @@ batch_size = 500
 
 print_interval = 1000
 
-step_num0 = 30000
+step_num0 = 100000
 
-step_num1 = 30000
+step_num1 = 100000
 
-step_num2 = 30000
+step_num2 = 100000
 
 step_num3 = 0
 
