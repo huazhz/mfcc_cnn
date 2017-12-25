@@ -19,6 +19,41 @@ def test():
     pass
 
 
+def get_train_develop_train_data():
+    train_l_f = './fil_l123.txt'
+    validation_l_f = './fil_l4.txt'
+    test_l_f = './fil_l5.txt'
+    classes = config.classes
+    train_data_origin, train_ls_origin = load_data.load_data2(train_l_f)
+    vali_data_origin, vali_ls_origin = load_data.load_data2(validation_l_f)
+    test_data_origin, test_ls_origin = load_data.load_data2(test_l_f)
+    target_emos = ['neu']
+    n = 200
+    shift = 40
+    mu, sigma = load_data.get_mu_sigma(train_data_origin, train_ls_origin, target_emos)
+    train_norm = load_data.normalize_origin_set(train_data_origin, mu, sigma)
+    vali_norm = load_data.normalize_origin_set(vali_data_origin, mu, sigma)
+    test_norm = load_data.normalize_origin_set(test_data_origin, mu, sigma)
+    train_data, train_ls = load_data.div_senses(train_norm, train_ls_origin, n, shift)
+    vali_data, vali_ls = load_data.div_senses(vali_norm, vali_ls_origin, n, shift)
+    test_data, test_ls = load_data.div_senses(test_norm, test_ls_origin, n, shift)
+    train_ls_1hot = load_data.get_one_hot_labels(train_ls, classes)
+    vali_ls_1hot = load_data.get_one_hot_labels(vali_ls, classes)
+    test_ls_1hot = load_data.get_one_hot_labels(test_ls, classes)
+    train_data_npy_f = 'data_123_n'+str(n) + '_s' + str(shift) + '.npy'
+    train_ls_1hot_npy_f = 'ls_1hot_123_n'+str(n) + '_s' + str(shift) + '.npy'
+    vali_data_npy_f = 'data_4_n' + str(n) + '_s' + str(shift) + '.npy'
+    vali_ls_1hot_npy_f = 'ls_1hot_4_n' + str(n) + '_s' + str(shift) + '.npy'
+    test_data_npy_f = 'data_5_n' + str(n) + '_s' + str(shift) + '.npy'
+    test_ls_1hot_npy_f = 'ls_1hot_5_n' + str(n) + '_s' + str(shift) + '.npy'
+    np.save(train_data_npy_f, train_data)
+    np.save(train_ls_1hot_npy_f, train_ls_1hot)
+    np.save(vali_data_npy_f, vali_data)
+    np.save(vali_ls_1hot_npy_f, vali_ls_1hot)
+    np.save(test_data_npy_f, test_data)
+    np.save(test_ls_1hot_npy_f, test_ls_1hot)
+
+
 def test_norm_and_div():
     target_emos = ['neu']
     classes = ['neu', 'ang', 'hap', 'sad']
@@ -158,7 +193,8 @@ def dump():
 
 
 if __name__ == '__main__':
-    test_norm_and_div()
+    get_train_develop_train_data()
+    # test_norm_and_div()
     # test_load_data2()
     # dump()
     # test_load_data2d_1hot()

@@ -3,7 +3,13 @@ batch_size = 500
 
 print_interval = 1000
 
+<<<<<<< HEAD
 step_num0 = 100000
+=======
+save_checkpoint_interval = 10000
+
+step_num0 = 30000
+>>>>>>> fba8f48d5e8e2d52837bd55806ce1fa1ab141bec
 
 step_num1 = 100000
 
@@ -21,9 +27,7 @@ learning_rate3 = 1e-4
 
 visible_device = '3'
 
-save_checkpoint_interval = 1000
-
-checkpoint_file = './my-model/my-model'
+checkpoint_file = './my-model2/my-model'
 
 # data_path = '/home/dai/Projects/emotions/data'
 #
@@ -39,9 +43,9 @@ checkpoint_file = './my-model/my-model'
 #
 # classes_pickle = './pickles/classes.pickle'
 
-gt_pickle = './pickles/gt_n200.pickle'
+gt_pickle = './pickles/gt_n200_3.pickle'
 
-pr_pickle = './pickles/pr_n200.pickle'
+pr_pickle = './pickles/pr_n200_3.pickle'
 
 # device = '/gpu:0'
 
@@ -60,10 +64,20 @@ fc1_fs = 512
 # classes = ['ang', 'exc', 'fru', 'hap', 'neu', 'sad']
 classes = ['neu', 'ang', 'hap', 'sad']
 
-train_d_npy = './train_data_n200_s40.npy'
+train_d_npy = './npy2/data_123_n200_s40.npy'
 
-train_l_npy = './train_l_n200_s40_1hot.npy'
+train_l_npy = './npy2/ls_1hot_123_n200_s40.npy'
 
-test_d_npy = './test_data_n200_s40.npy'
+vali_d_npy = './npy2/data_4_n200_s40.npy'
 
-test_l_npy = './test_l_n200_s40_1hot.npy'
+vali_l_npy = './npy2/ls_1hot_4_n200_s40.npy'
+
+test_d_npy = './npy2/data_5_n200_s40.npy'
+
+test_l_npy = './npy2/ls_1hot_5_n200_s40.npy'
+
+is_train = True
+
+is_restore = False
+
+restore_file = ''

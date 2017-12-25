@@ -8,3 +8,5 @@ save_pid.txt
 *.npy
 *.npz
 my-model/*
+npy/*
+npy2/*
