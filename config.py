@@ -41,9 +41,9 @@ checkpoint_file = './my-model/my-model'
 #
 # classes_pickle = './pickles/classes.pickle'
 
-gt_pickle = './pickles/gt_n200.pickle'
+gt_pickle = './pickles/gt_n200_3.pickle'
 
-pr_pickle = './pickles/pr_n200.pickle'
+pr_pickle = './pickles/pr_n200_3.pickle'
 
 # device = '/gpu:0'
 
