@@ -45,8 +45,8 @@ def print_csv():
         print()
     print()
 
-    sum = np.sum(matrix, axis=1)
-    matrix2 = matrix / sum
+    sum_1 = np.sum(matrix, axis=1)
+    matrix2 = matrix / sum_1.reshape((-1, 1))
 
     print('  a\\p', end='\t')
     for c in classes:

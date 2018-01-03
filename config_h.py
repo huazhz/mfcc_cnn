@@ -1,6 +1,6 @@
-id_str = '01031404'
+id_str = 'h01031306'
 
-visible_device = '3'
+visible_device = '2'
 
 is_train = True
 
@@ -14,10 +14,10 @@ loop_epoch_nums = [200, 200, 200, 200]
 
 learning_rates = [0.1, 0.05, 0.02, 0.01]
 
-log_epoch_interval = 5
+log_epoch_interval = 10
 
 persist_checkpoint_interval = 30
-persist_checkpoint_file = 'p-my-model/p-my-model' + id_str + '_'
+persist_checkpoint_file = 'h-p-my-model/p-my-model' + id_str + '_'
 
 # classes = ['ang', 'exc', 'fru', 'hap', 'neu', 'sad']
 classes = ['neu', 'ang', 'hap', 'sad']
@@ -26,7 +26,7 @@ loss_weights = [1, 1, 1, 1]
 
 batch_size = 500
 
-train_k_prob = 0.2
+train_k_prob = 0.5
 
 gt_pickle = './pickles/gt_' + id_str + '.pickle'
 
@@ -37,15 +37,15 @@ mfcc_n = 200
 
 conv_strides = [1, 1, 1, 1]
 
-maxpool_ksize = [1, 4, 2, 1]
+maxpool_ksize = [1, 2, 2, 1]
 
-maxpool_strides = [1, 4, 2, 1]
+maxpool_strides = [1, 2, 2, 1]
 
-cnn_kernel1_shape = [10, 5, 1, 16]
+cnn_kernel1_shape = [5, 5, 1, 16]
 
-cnn_kernel2_shape = [10, 5, 16, 32]
+cnn_kernel2_shape = [5, 5, 16, 32]
 
-fc1_fs = 256
+fc1_fs = 512
 
 
 train_d_npy = './npy2/data_123_n200_s40.npy'

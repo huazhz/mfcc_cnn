@@ -10,3 +10,4 @@ save_pid.txt
 my-model/*
 npy/*
 npy2/*
+*my-model*/*

@@ -3,7 +3,7 @@ import numpy as np
 import load_data
 import data_set
 import tempfile
-import config
+import config_h
 import post_process
 import os
 import sys
@@ -12,24 +12,24 @@ from itertools import accumulate
 from functools import reduce
 import post_process
 
-os.environ["CUDA_VISIBLE_DEVICES"] = config.visible_device
+os.environ["CUDA_VISIBLE_DEVICES"] = config_h.visible_device
 
 
 def deep_nn(x, k_prob):
     with tf.name_scope('reshape'):
-        x_mfcc = tf.reshape(x, [-1, config.mfcc_n, 39, 1])
+        x_mfcc = tf.reshape(x, [-1, config_h.mfcc_n, 39, 1])
 
     with tf.name_scope('conv1'):
-        w_c1 = weight_variable(config.cnn_kernel1_shape)
-        b_c1 = bias_variable(config.cnn_kernel1_shape[-1:])
+        w_c1 = weight_variable(config_h.cnn_kernel1_shape)
+        b_c1 = bias_variable(config_h.cnn_kernel1_shape[-1:])
         h_c1 = tf.nn.relu(conv2d(x_mfcc, w_c1) + b_c1)
 
     with tf.name_scope('pool1'):
         h_p1 = max_pool(h_c1)
 
     with tf.name_scope('conv2'):
-        w_c2 = weight_variable(config.cnn_kernel2_shape)
-        b_c2 = bias_variable(config.cnn_kernel2_shape[-1:])
+        w_c2 = weight_variable(config_h.cnn_kernel2_shape)
+        b_c2 = bias_variable(config_h.cnn_kernel2_shape[-1:])
         h_c2 = tf.nn.relu(conv2d(h_p1, w_c2) + b_c2)
 
     with tf.name_scope('pool2'):
@@ -38,16 +38,16 @@ def deep_nn(x, k_prob):
     with tf.name_scope('fc1'):
         [_, d2, d3, d4] = h_p2.shape.as_list()
         h_p2_flat = tf.reshape(h_p2, [-1, d2 * d3 * d4])
-        w_fc1 = weight_variable([d2 * d3 * d4, config.fc1_fs])
-        b_fc1 = bias_variable([config.fc1_fs])
+        w_fc1 = weight_variable([d2 * d3 * d4, config_h.fc1_fs])
+        b_fc1 = bias_variable([config_h.fc1_fs])
         h_fc1 = tf.nn.relu(tf.matmul(h_p2_flat, w_fc1) + b_fc1)
 
     with tf.name_scope('dropout'):
         h_fc1_dropout = tf.nn.dropout(h_fc1, k_prob)
 
     with tf.name_scope('fc2'):
-        w_fc2 = weight_variable([config.fc1_fs, len(config.classes)])
-        b_fc2 = bias_variable([len(config.classes)])
+        w_fc2 = weight_variable([config_h.fc1_fs, len(config_h.classes)])
+        b_fc2 = bias_variable([len(config_h.classes)])
         h_fc2 = tf.matmul(h_fc1_dropout, w_fc2) + b_fc2
 
     # y_conv = tf.nn.softmax(h_fc2)
@@ -56,11 +56,11 @@ def deep_nn(x, k_prob):
 
 
 def conv2d(x, W):
-    return tf.nn.conv2d(x, W, strides=config.conv_strides, padding='SAME')
+    return tf.nn.conv2d(x, W, strides=config_h.conv_strides, padding='SAME')
 
 
 def max_pool(x):
-    return tf.nn.max_pool(x, ksize=config.maxpool_ksize, strides=config.maxpool_strides, padding='SAME')
+    return tf.nn.max_pool(x, ksize=config_h.maxpool_ksize, strides=config_h.maxpool_strides, padding='SAME')
 
 
 def weight_variable(shape):
@@ -74,27 +74,27 @@ def bias_variable(shape):
 
 
 def main(_):
-    log_epoch_interval = config.log_epoch_interval
-    n_classes = len(config.classes)
-    loss_weights = tf.constant(config.loss_weights, dtype=tf.float32)
-    learning_rates = config.learning_rates
-    restore_file = config.restore_file
-    restart_epoch_i = config.restart_epoch_i
-    loop_epoch_nums = config.loop_epoch_nums
-    persist_checkpoint_interval = config.persist_checkpoint_interval
-    persist_checkpoint_file = config.persist_checkpoint_file
+    log_epoch_interval = config_h.log_epoch_interval
+    n_classes = len(config_h.classes)
+    loss_weights = tf.constant(config_h.loss_weights, dtype=tf.float32)
+    learning_rates = config_h.learning_rates
+    restore_file = config_h.restore_file
+    restart_epoch_i = config_h.restart_epoch_i
+    loop_epoch_nums = config_h.loop_epoch_nums
+    persist_checkpoint_interval = config_h.persist_checkpoint_interval
+    persist_checkpoint_file = config_h.persist_checkpoint_file
 
-    train_data = np.load(config.train_d_npy)
-    train_ls = np.load(config.train_l_npy)
+    train_data = np.load(config_h.train_d_npy)
+    train_ls = np.load(config_h.train_l_npy)
     mfcc_train = data_set.DataSet(train_data, train_ls)
-    vali_data = np.load(config.vali_d_npy)
-    vali_ls = np.load(config.vali_l_npy)
+    vali_data = np.load(config_h.vali_d_npy)
+    vali_ls = np.load(config_h.vali_l_npy)
     mfcc_vali = data_set.DataSet(vali_data, vali_ls)
-    test_data = np.load(config.test_d_npy)
-    test_ls = np.load(config.test_l_npy)
+    test_data = np.load(config_h.test_d_npy)
+    test_ls = np.load(config_h.test_l_npy)
     mfcc_test = data_set.DataSet(test_data, test_ls)
 
-    x = tf.placeholder(tf.float32, [None, config.mfcc_n, 39])
+    x = tf.placeholder(tf.float32, [None, config_h.mfcc_n, 39])
     y_ = tf.placeholder(tf.float32, [None, n_classes])
     k_prob = tf.placeholder(tf.float32)
     y_conv = deep_nn(x, k_prob)
@@ -127,10 +127,10 @@ def main(_):
     saver = tf.train.Saver()
 
     with tf.Session() as sess:
-        if config.is_train:
+        if config_h.is_train:
             start_i = 0
             end_i = reduce((lambda _a, _b: _a + _b), loop_epoch_nums, 0)
-            if config.is_restore:
+            if config_h.is_restore:
                 saver.restore(sess, restore_file)
                 start_i = restart_epoch_i
             else:
@@ -156,9 +156,9 @@ def main(_):
 
 
 def save_result(x, y_, k_prob, y_conv, d_set, sess):
-    batch_size = config.batch_size
-    gt_pickle = config.gt_pickle
-    pr_pickle = config.pr_pickle
+    batch_size = config_h.batch_size
+    gt_pickle = config_h.gt_pickle
+    pr_pickle = config_h.pr_pickle
     g_ts = list()
     p_rs = list()
     is_epoch_end = False
@@ -176,8 +176,8 @@ def save_result(x, y_, k_prob, y_conv, d_set, sess):
 
 
 def train_epoch(x, y_, k_prob, train_step, learning_rate_ph, lr, train_set, sess):
-    batch_size = config.batch_size
-    train_k_prob = config.train_k_prob
+    batch_size = config_h.batch_size
+    train_k_prob = config_h.train_k_prob
     is_epoch_end = False
     while not is_epoch_end:
         batch_x, batch_y, is_epoch_end = train_set.next_batch_fix2(batch_size)
@@ -187,7 +187,7 @@ def train_epoch(x, y_, k_prob, train_step, learning_rate_ph, lr, train_set, sess
 
 
 def acc_loss_epoch(x, y_, k_prob, acc_tf, loss_tf, d_set, sess):
-    batch_size = config.batch_size
+    batch_size = config_h.batch_size
     losses = list()
     acces = list()
     weights = list()
@@ -223,7 +223,7 @@ def get_lr(lrs, train_epoch_nums, current_num):
 #     return train_steps[-1]
 
 
-def print_config(cfg_file='./config.py'):
+def print_config(cfg_file='./config_h.py'):
     with open(cfg_file, 'r') as cfg_f:
         for line in cfg_f:
             if '#' in line:
@@ -237,4 +237,4 @@ def print_config(cfg_file='./config.py'):
 if __name__ == '__main__':
     print_config()
     tf.app.run(main=main, argv=[sys.argv[0]])
-    print('id_str', config.id_str)
+    print('id_str', config_h.id_str)
