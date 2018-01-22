@@ -4,10 +4,10 @@ import config
 import time
 from collections import Counter
 
-train_data_origin_f = 'train_data_origin.npy_old'
-test_data_origin_f = 'test_data_origin.npy_old'
-train_labels_f = 'train_labels.npy_old'
-test_labels_f = 'test_labels.npy_old'
+train_data_origin_f = 'train_data_origin.npy'
+test_data_origin_f = 'test_data_origin.npy'
+train_labels_f = 'train_labels.npy'
+test_labels_f = 'test_labels.npy'
 
 train_data_pre = 'train_data_'
 train_l_pre = 'train_l_'
@@ -16,12 +16,35 @@ test_l_pre = 'test_l_'
 
 
 def test():
-    pass
+    test_l_f = './fil_l5.txt'
+    test_data_origin, test_ls_origin, test_sens_ids_origin = load_data.load_data2_with_sentence(
+        test_l_f)
 
 
 def get_test_data_with_sentences():
-    test_l_f = '/fil_l5.txt'
+    train_l_f = './fil_l123.txt'
+    test_l_f = './fil_l5.txt'
     classes = config.classes
+    train_data_origin, train_ls_origin = load_data.load_data2(train_l_f)
+    test_data_origin, test_ls_origin, test_sens_ids_origin = load_data.load_data2_with_sentence(
+        test_l_f)
+    target_emos = ['neu']
+    n = 200
+    shift = 40
+    mu, sigma = load_data.get_mu_sigma(train_data_origin, train_ls_origin, target_emos)
+    # train_norm = load_data.normalize_origin_set(train_data_origin, mu, sigma)
+    test_norm = load_data.normalize_origin_set(test_data_origin, mu, sigma)
+    test_data, test_ls, test_sens_ids = load_data.div_senses_with_sentences(test_norm,
+                                                                            test_ls_origin,
+                                                                            test_sens_ids_origin, n,
+                                                                            shift)
+    test_ls_1hot = load_data.get_one_hot_labels(test_ls, classes)
+    test_data_npy_f = 'data_5_sens_n' + str(n) + '_s' + str(shift) + '.npy'
+    test_ls_1hot_npy_f = 'ls_1hot_5_sens_n' + str(n) + '_s' + str(shift) + '.npy'
+    test_sens_npy_f = 'sens_5_sens_n' + str(n) + '_s' + str(shift) + '.npy'
+    np.save(test_data_npy_f, test_data)
+    np.save(test_ls_1hot_npy_f, test_ls_1hot)
+    np.save(test_sens_npy_f, test_sens_ids)
 
 
 def get_train_develop_train_data():
@@ -45,12 +68,12 @@ def get_train_develop_train_data():
     train_ls_1hot = load_data.get_one_hot_labels(train_ls, classes)
     vali_ls_1hot = load_data.get_one_hot_labels(vali_ls, classes)
     test_ls_1hot = load_data.get_one_hot_labels(test_ls, classes)
-    train_data_npy_f = 'data_123_n'+str(n) + '_s' + str(shift) + '.npy_old'
-    train_ls_1hot_npy_f = 'ls_1hot_123_n'+str(n) + '_s' + str(shift) + '.npy_old'
-    vali_data_npy_f = 'data_4_n' + str(n) + '_s' + str(shift) + '.npy_old'
-    vali_ls_1hot_npy_f = 'ls_1hot_4_n' + str(n) + '_s' + str(shift) + '.npy_old'
-    test_data_npy_f = 'data_5_n' + str(n) + '_s' + str(shift) + '.npy_old'
-    test_ls_1hot_npy_f = 'ls_1hot_5_n' + str(n) + '_s' + str(shift) + '.npy_old'
+    train_data_npy_f = 'data_123_n' + str(n) + '_s' + str(shift) + '.npy'
+    train_ls_1hot_npy_f = 'ls_1hot_123_n' + str(n) + '_s' + str(shift) + '.npy'
+    vali_data_npy_f = 'data_4_n' + str(n) + '_s' + str(shift) + '.npy'
+    vali_ls_1hot_npy_f = 'ls_1hot_4_n' + str(n) + '_s' + str(shift) + '.npy'
+    test_data_npy_f = 'data_5_n' + str(n) + '_s' + str(shift) + '.npy'
+    test_ls_1hot_npy_f = 'ls_1hot_5_n' + str(n) + '_s' + str(shift) + '.npy'
     np.save(train_data_npy_f, train_data)
     np.save(train_ls_1hot_npy_f, train_ls_1hot)
     np.save(vali_data_npy_f, vali_data)
@@ -68,7 +91,8 @@ def test_norm_and_div():
     test_origin = np.load(test_data_origin_f)
     train_labels = np.load(train_labels_f)
     test_labels = np.load(test_labels_f)
-    train_norm, test_norm = load_data.norm_train_test_set(train_origin, train_labels, test_origin, target_emos)
+    train_norm, test_norm = load_data.norm_train_test_set(train_origin, train_labels, test_origin,
+                                                          target_emos)
     train_data, train_ls = load_data.div_senses(train_norm, train_labels, n, shift)
     test_data, test_ls = load_data.div_senses(test_norm, test_labels, n, shift)
     train_ls_1hot = load_data.get_one_hot_labels(train_ls, classes)
@@ -83,8 +107,6 @@ def test_norm_and_div():
     np.save(train_l_filename, train_ls_1hot)
     np.save(test_data_filename, test_data)
     np.save(test_l_filename, test_ls_1hot)
-
-
 
 
 def test_load_data2():
@@ -198,7 +220,8 @@ def dump():
 
 
 if __name__ == '__main__':
-    get_train_develop_train_data()
+    get_test_data_with_sentences()
+    # get_train_develop_train_data()
     # test_norm_and_div()
     # test_load_data2()
     # dump()

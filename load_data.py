@@ -19,6 +19,25 @@ def load_data2(simple_label_file):
     return np.array(data), np.array(labels)
 
 
+def load_data2_with_sentence(simple_label_file):
+    id = 0
+    data = list()
+    labels = list()
+    sens_ids = list()
+    with open(simple_label_file, 'r') as inf:
+        for line in inf:
+            eles = line.split()
+            if len(eles) == 2:
+                mfcc_path = get_mfcc_path(eles[0])
+                samples = load_mfcc(mfcc_path)
+                data.append(samples)
+                labels.append(eles[1])
+                sens_ids.append(id)
+                id += 1
+    return np.array(data), np.array(labels), np.array(sens_ids)
+
+
+
 def load_data2_np(simple_label_file):
     data = list()
     labels = list()
@@ -182,6 +201,22 @@ def div_senses(sets, sets_ls, n, shift):
         data += rs
         ls += single_ls
     return np.array(data), np.array(ls)
+
+
+def div_senses_with_sentences(sets, sets_ls, sets_sens, n, shift):
+    data = list()
+    ls = list()
+    sen_ids = list()
+    for ele, l, sen_id in zip(sets, sets_ls, sets_sens):
+        rs = div_sens(ele, n, shift)
+        if rs is None:
+            continue
+        single_ls = [l] * len(rs)
+        single_sen = [sen_id] * len(rs)
+        data += rs
+        ls += single_ls
+        sen_ids += single_sen
+    return np.array(data), np.array(ls), np.array(sen_ids)
 
 
 # norm

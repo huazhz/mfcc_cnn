@@ -48,17 +48,17 @@ cnn_kernel2_shape = [5, 5, 16, 32]
 fc1_fs = 512
 
 
-train_d_npy = './npy2/data_123_n200_s40.npy_old'
+train_d_npy = './npy2/data_123_n200_s40.npy'
 
-train_l_npy = './npy2/ls_1hot_123_n200_s40.npy_old'
+train_l_npy = './npy2/ls_1hot_123_n200_s40.npy'
 
-vali_d_npy = './npy2/data_4_n200_s40.npy_old'
+vali_d_npy = './npy2/data_4_n200_s40.npy'
 
-vali_l_npy = './npy2/ls_1hot_4_n200_s40.npy_old'
+vali_l_npy = './npy2/ls_1hot_4_n200_s40.npy'
 
-test_d_npy = './npy2/data_5_n200_s40.npy_old'
+test_d_npy = './npy2/data_5_n200_s40.npy'
 
-test_l_npy = './npy2/ls_1hot_5_n200_s40.npy_old'
+test_l_npy = './npy2/ls_1hot_5_n200_s40.npy'
 
 # # old config below
 
