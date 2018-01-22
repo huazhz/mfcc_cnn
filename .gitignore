@@ -11,3 +11,4 @@ my-model/*
 npy/*
 npy2/*
 *my-model*/*
+npy_old/*

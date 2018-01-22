@@ -4,10 +4,10 @@ import config
 import time
 from collections import Counter
 
-train_data_origin_f = 'train_data_origin.npy'
-test_data_origin_f = 'test_data_origin.npy'
-train_labels_f = 'train_labels.npy'
-test_labels_f = 'test_labels.npy'
+train_data_origin_f = 'train_data_origin.npy_old'
+test_data_origin_f = 'test_data_origin.npy_old'
+train_labels_f = 'train_labels.npy_old'
+test_labels_f = 'test_labels.npy_old'
 
 train_data_pre = 'train_data_'
 train_l_pre = 'train_l_'
@@ -17,6 +17,11 @@ test_l_pre = 'test_l_'
 
 def test():
     pass
+
+
+def get_test_data_with_sentences():
+    test_l_f = '/fil_l5.txt'
+    classes = config.classes
 
 
 def get_train_develop_train_data():
@@ -40,12 +45,12 @@ def get_train_develop_train_data():
     train_ls_1hot = load_data.get_one_hot_labels(train_ls, classes)
     vali_ls_1hot = load_data.get_one_hot_labels(vali_ls, classes)
     test_ls_1hot = load_data.get_one_hot_labels(test_ls, classes)
-    train_data_npy_f = 'data_123_n'+str(n) + '_s' + str(shift) + '.npy'
-    train_ls_1hot_npy_f = 'ls_1hot_123_n'+str(n) + '_s' + str(shift) + '.npy'
-    vali_data_npy_f = 'data_4_n' + str(n) + '_s' + str(shift) + '.npy'
-    vali_ls_1hot_npy_f = 'ls_1hot_4_n' + str(n) + '_s' + str(shift) + '.npy'
-    test_data_npy_f = 'data_5_n' + str(n) + '_s' + str(shift) + '.npy'
-    test_ls_1hot_npy_f = 'ls_1hot_5_n' + str(n) + '_s' + str(shift) + '.npy'
+    train_data_npy_f = 'data_123_n'+str(n) + '_s' + str(shift) + '.npy_old'
+    train_ls_1hot_npy_f = 'ls_1hot_123_n'+str(n) + '_s' + str(shift) + '.npy_old'
+    vali_data_npy_f = 'data_4_n' + str(n) + '_s' + str(shift) + '.npy_old'
+    vali_ls_1hot_npy_f = 'ls_1hot_4_n' + str(n) + '_s' + str(shift) + '.npy_old'
+    test_data_npy_f = 'data_5_n' + str(n) + '_s' + str(shift) + '.npy_old'
+    test_ls_1hot_npy_f = 'ls_1hot_5_n' + str(n) + '_s' + str(shift) + '.npy_old'
     np.save(train_data_npy_f, train_data)
     np.save(train_ls_1hot_npy_f, train_ls_1hot)
     np.save(vali_data_npy_f, vali_data)

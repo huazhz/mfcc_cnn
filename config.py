@@ -1,22 +1,22 @@
-id_str = '01031404'
+id_str = '01212000'
 
 visible_device = '3'
 
 is_train = True
 
-is_restore = False
+is_restore = True
 
-restore_file = ''
+restore_file = 'p-my-model/p-my-model01031736_300'
 
-restart_epoch_i = 0
+restart_epoch_i = 300
 
-loop_epoch_nums = [200, 200, 200, 200]
+loop_epoch_nums = [400, 200, 000, 0]
 
 learning_rates = [0.1, 0.05, 0.02, 0.01]
 
-log_epoch_interval = 5
+log_epoch_interval = 10
 
-persist_checkpoint_interval = 30
+persist_checkpoint_interval = 3000
 persist_checkpoint_file = 'p-my-model/p-my-model' + id_str + '_'
 
 # classes = ['ang', 'exc', 'fru', 'hap', 'neu', 'sad']
@@ -48,17 +48,17 @@ cnn_kernel2_shape = [10, 5, 16, 32]
 fc1_fs = 256
 
 
-train_d_npy = './npy2/data_123_n200_s40.npy'
+train_d_npy = './npy2/data_123_n200_s40.npy_old'
 
-train_l_npy = './npy2/ls_1hot_123_n200_s40.npy'
+train_l_npy = './npy2/ls_1hot_123_n200_s40.npy_old'
 
-vali_d_npy = './npy2/data_4_n200_s40.npy'
+vali_d_npy = './npy2/data_4_n200_s40.npy_old'
 
-vali_l_npy = './npy2/ls_1hot_4_n200_s40.npy'
+vali_l_npy = './npy2/ls_1hot_4_n200_s40.npy_old'
 
-test_d_npy = './npy2/data_5_n200_s40.npy'
+test_d_npy = './npy2/data_5_n200_s40.npy_old'
 
-test_l_npy = './npy2/ls_1hot_5_n200_s40.npy'
+test_l_npy = './npy2/ls_1hot_5_n200_s40.npy_old'
 
 # # old config below
 
@@ -84,17 +84,13 @@ learning_rate3 = 1e-4
 
 checkpoint_file = './my-model2/my-model'
 
-# data_path = '/home/dai/Projects/emotions/data'
-#
-#
-#
-# label_file = './trim_labels_1.txt'
-#
-#
-#
-# continue_eles = 50
-#
-# train_rate = 0.7
-#
-# classes_pickle = './pickles/classes.pickle'
+data_path = '/home/dai/Projects/emotions/data'
+
+label_file = './trim_labels_1.txt'
+
+continue_eles = 50
+
+train_rate = 0.7
+
+classes_pickle = './pickles/classes.pickle'
 

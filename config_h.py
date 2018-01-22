@@ -1,4 +1,4 @@
-id_str = 'h01031306'
+id_str = 'h01031737'
 
 visible_device = '2'
 
@@ -10,13 +10,13 @@ restore_file = ''
 
 restart_epoch_i = 0
 
-loop_epoch_nums = [200, 200, 200, 200]
+loop_epoch_nums = [50, 50, 50, 50]
 
 learning_rates = [0.1, 0.05, 0.02, 0.01]
 
 log_epoch_interval = 10
 
-persist_checkpoint_interval = 30
+persist_checkpoint_interval = 50
 persist_checkpoint_file = 'h-p-my-model/p-my-model' + id_str + '_'
 
 # classes = ['ang', 'exc', 'fru', 'hap', 'neu', 'sad']
@@ -48,17 +48,17 @@ cnn_kernel2_shape = [5, 5, 16, 32]
 fc1_fs = 512
 
 
-train_d_npy = './npy2/data_123_n200_s40.npy'
+train_d_npy = './npy2/data_123_n200_s40.npy_old'
 
-train_l_npy = './npy2/ls_1hot_123_n200_s40.npy'
+train_l_npy = './npy2/ls_1hot_123_n200_s40.npy_old'
 
-vali_d_npy = './npy2/data_4_n200_s40.npy'
+vali_d_npy = './npy2/data_4_n200_s40.npy_old'
 
-vali_l_npy = './npy2/ls_1hot_4_n200_s40.npy'
+vali_l_npy = './npy2/ls_1hot_4_n200_s40.npy_old'
 
-test_d_npy = './npy2/data_5_n200_s40.npy'
+test_d_npy = './npy2/data_5_n200_s40.npy_old'
 
-test_l_npy = './npy2/ls_1hot_5_n200_s40.npy'
+test_l_npy = './npy2/ls_1hot_5_n200_s40.npy_old'
 
 # # old config below
 

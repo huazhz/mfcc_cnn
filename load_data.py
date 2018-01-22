@@ -84,6 +84,25 @@ def load_data_2d(simple_label_file, n):
     return np.array(data), np.array(labels)
 
 
+def load_data_2d_with_sentences(simple_label_file, n, sens_id):
+    sen_ids = list()
+    data = list()
+    labels = list()
+    with open(simple_label_file, 'r') as inf:
+        for line in inf:
+            eles = line.split()
+            if len(eles) == 2:
+                mfcc_path = get_mfcc_path(eles[0])
+                samples_1d = load_mfcc(mfcc_path)
+                samples_2d = samples1dto2d(samples_1d, n)
+                sample_labels = [eles[1]] * len(samples_2d)
+                sample_ids = [sens_id] * len(samples_2d)
+                data += samples_2d
+                labels += sample_labels
+                sen_ids += sample_ids
+    return np.array(data), np.array(labels), np.array(sen_ids)
+
+
 def samples1dto2d(samples1d, n):
     results = list()
     len_1d = len(samples1d)

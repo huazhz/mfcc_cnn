@@ -106,10 +106,14 @@ def main(_):
         # tmp2 = tmp1 * loss_weights
         # print('tmp2 shape', tmp2.shape)
         # cross_entroys = -tf.reduce_mean(y_ * tf.log(y_conv) * loss_weights, reduction_indices=[1])
-        y_label = y_ * loss_weights
-        cross_entroys = tf.nn.softmax_cross_entropy_with_logits(labels=y_label, logits=y_conv)
+        # y_label = y_ * loss_weights
+        # cross_entroys = tf.nn.softmax_cross_entropy_with_logits(labels=y_label, logits=y_conv)
         # cross_entroys = tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y_conv)
-    loss = tf.reduce_mean(cross_entroys)
+        # cross_entroys = tf.nn.weighted_cross_entropy_with_logits()
+        weights = tf.reduce_sum(loss_weights * y_, axis=1)
+        unweighted_losses = tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y_conv)
+        weight_losses = unweighted_losses * weights
+    loss = tf.reduce_mean(weight_losses)
 
     with tf.name_scope('adadelta_optimizer'):
         train_step = tf.train.AdadeltaOptimizer(learning_rate_ph).minimize(loss)
@@ -142,7 +146,7 @@ def main(_):
                     vali_acc, vali_loss = acc_loss_epoch(x, y_, k_prob, accuracy, loss, mfcc_vali, sess)
                     print('epoch %d , train_acc %g , train_loss %g , vali_acc %g, vali_loss %g' % (
                         i, train_acc, train_loss, vali_acc, vali_loss))
-                if i % persist_checkpoint_interval == 0:
+                if i % persist_checkpoint_interval == 0 and i >= persist_checkpoint_interval:
                     saver.save(sess, persist_checkpoint_file+str(i))
                 # train_step = get_train_step(train_steps, loop_epoch_nums, i)
                 lr = get_lr(learning_rates, loop_epoch_nums, i)
