@@ -8,6 +8,7 @@ import post_process
 import os
 import sys
 import operator
+import data_set2
 from itertools import accumulate
 from functools import reduce
 import post_process
@@ -92,12 +93,15 @@ def main(_):
     mfcc_vali = data_set.DataSet(vali_data, vali_ls)
     test_data = np.load(config.test_d_npy)
     test_ls = np.load(config.test_l_npy)
-    mfcc_test = data_set.DataSet(test_data, test_ls)
+    test_sens = np.load(config.test_sens_npy)
+    test_sens_num = np.max(test_sens) + 1
+    mfcc_test = data_set2.DataSet(test_data, test_ls, test_sens)
 
     x = tf.placeholder(tf.float32, [None, config.mfcc_n, 39])
     y_ = tf.placeholder(tf.float32, [None, n_classes])
     k_prob = tf.placeholder(tf.float32)
     y_conv = deep_nn(x, k_prob)
+    y_prob = tf.nn.softmax(y_conv)
     learning_rate_ph = tf.placeholder(tf.float32)
 
     with tf.name_scope('loss'):
@@ -157,6 +161,32 @@ def main(_):
         test_acc, test_loss = acc_loss_epoch(x, y_, k_prob, accuracy, loss, mfcc_test, sess)
         print('test_acc %g , test_loss %g' % (test_acc, test_loss))
         save_result(x, y_, k_prob, y_conv, mfcc_test, sess)
+        test_sens_acc = result_sentence(x, k_prob, y_prob, mfcc_test, test_sens_num, sess)
+        print('test_sens_acc', test_sens_acc)
+
+
+def result_sentence(x, k_prob, y_conv, d_set, test_sens_num, sess):
+    batch_size = config.batch_size
+    gt_sen_np = np.zeros((test_sens_num, len(config.classes)))
+    pr_sen_np = np.zeros((test_sens_num, len(config.classes)))
+    is_epoch_end = False
+    while not is_epoch_end:
+        batch_x, batch_y, batch_sens, is_epoch_end = d_set.next_batch_fix3(batch_size)
+        batch_y_conv = y_conv.eval(feed_dict={
+            x: batch_x, k_prob: 1
+        }, session=sess)
+        for y_, sen_id in zip(batch_y, batch_sens):
+            # id is the same as index
+            gt_sen_np[sen_id] += y_
+        for y_pr, sen_id in zip(batch_y_conv, batch_sens):
+            pr_sen_np[sen_id] += y_pr
+    gt_sen = np.argmax(gt_sen_np, axis=1)
+    pr_sen = np.argmax(pr_sen_np, axis=1)
+    check = (gt_sen == pr_sen)
+    acc = np.sum(check)/len(check)
+    np.save(config.gt_sens, gt_sen)
+    np.save(config.pr_sens, pr_sen)
+    return acc
 
 
 def save_result(x, y_, k_prob, y_conv, d_set, sess):
@@ -239,6 +269,7 @@ def print_config(cfg_file='./config.py'):
 
 
 if __name__ == '__main__':
-    print_config()
+    if config.is_log_cfg:
+        print_config()
     tf.app.run(main=main, argv=[sys.argv[0]])
     print('id_str', config.id_str)

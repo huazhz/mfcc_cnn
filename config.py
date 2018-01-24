@@ -1,36 +1,41 @@
-id_str = '01212000'
+id_str = '01231059'
+
+is_log_cfg = True
 
 visible_device = '3'
 
-is_train = True
+is_train = False
 
-is_restore = True
+is_restore = False
 
-restore_file = 'p-my-model/p-my-model01031736_300'
+restore_file = 'p-my-model/p-my-model01231059_600'
 
-restart_epoch_i = 300
+restart_epoch_i = 0
 
-loop_epoch_nums = [400, 200, 000, 0]
+loop_epoch_nums = [100, 200, 200, 300, 300]
 
-learning_rates = [0.1, 0.05, 0.02, 0.01]
+learning_rates = [0.2, 0.1, 0.05, 0.02, 0.01]
 
-log_epoch_interval = 10
+log_epoch_interval = 5
 
-persist_checkpoint_interval = 3000
+persist_checkpoint_interval = 300
 persist_checkpoint_file = 'p-my-model/p-my-model' + id_str + '_'
 
 # classes = ['ang', 'exc', 'fru', 'hap', 'neu', 'sad']
 classes = ['neu', 'ang', 'hap', 'sad']
 
-loss_weights = [1, 1, 1, 1]
+loss_weights = [0.68, 0.95, 1.92, 1.03]
 
-batch_size = 500
+batch_size = 512
 
 train_k_prob = 0.2
 
 gt_pickle = './pickles/gt_' + id_str + '.pickle'
 
 pr_pickle = './pickles/pr_' + id_str + '.pickle'
+
+gt_sens = 'gt_sens_' + id_str + '.npy'
+pr_sens = 'pr_sens_' + id_str + '.npy'
 
 # input matrix n * 39
 mfcc_n = 200
@@ -56,9 +61,11 @@ vali_d_npy = './npy2/data_4_n200_s40.npy'
 
 vali_l_npy = './npy2/ls_1hot_4_n200_s40.npy'
 
-test_d_npy = './npy2/data_5_n200_s40.npy'
+test_d_npy = './npy2/data_5_sens_n200_s40.npy'
 
-test_l_npy = './npy2/ls_1hot_5_n200_s40.npy'
+test_l_npy = './npy2/ls_1hot_5_sens_n200_s40.npy'
+
+test_sens_npy = './npy2/sens_5_sens_n200_s40.npy'
 
 # # old config below
 
